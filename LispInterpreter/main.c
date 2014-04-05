@@ -7,8 +7,11 @@
 //
 
 #include <stdio.h>
+#include <stdlib.h>
 
-static char input[1024];
+#include <editline/readline.h>
+
+
 
 int main(int argc, const char * argv[])
 {
@@ -17,10 +20,10 @@ int main(int argc, const char * argv[])
     puts("Press C-c to exit\n");
 
     while (1) {
-        fputs("lipsy>", stdout);
-        fgets(input, 1024, stdin);
-        printf("Okay. You entered %s", input);
-        
+        char* input = readline("lispy>");
+        add_history(input);
+        printf("you entered %s\n", input);
+        free(input);
     }
     
     return 0;
