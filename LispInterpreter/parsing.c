@@ -12,6 +12,8 @@
 #include "mpc.h"
 
 #define INPUT_BUFFER_SIZE 2048
+
+
 #ifdef __WIN32
 #include <string.h>
 
@@ -37,11 +39,46 @@ void add_history(char* line){
 
 #endif
 
+long eval_op(long x, char* op, long y) {
+    if (strstr(op, "+")) {
+        return x + y;
+    }
+    if (strstr(op, "-")) {
+        return x - y;
+    }
+    if (strstr(op, "*")) {
+        return x * y;
+    }
+    if (strstr(op, "/")) {
+        if (y != 0)
+            return x / y;
+        else {
+            printf("attempt to divide by zero: exiting...\n");
+            return 0;
+        }
+    }
+    return 0;
+}
+
+long eval(mpc_ast_t* t) {
+    if (strstr(t->tag, "number")) {
+        return atoi(t->contents);
+    }
+    char* op = t->children[1]->contents;
+    long x = eval(t->children[2]);
+    
+    int i = 3;
+    while (strstr(t->children[i]->tag,"expr")) {
+        x = eval_op(x, op, eval(t->children[i]));
+        i++;
+    }
+    return x;
+}
 
 
 int main(int argc, const char * argv[])
 {
-
+    
     // create some parsers
     mpc_parser_t* Number = mpc_new("number");
     mpc_parser_t* Operator = mpc_new("operator");
@@ -50,16 +87,16 @@ int main(int argc, const char * argv[])
     
     mpca_lang(MPC_LANG_DEFAULT,
               "                                             \
-                number : /-?[0-9]+/ ;                       \
-                operator : '+' | '-' | '*' | '/' ;          \
-                expr : <number> | '('<operator> <expr>+')'; \
-                lispy : /^/ <operator> <expr>+ /$/ ;        \
+              number : /-?[0-9]+/ ;                       \
+              operator : '+' | '-' | '*' | '/' ;          \
+              expr : <number> | '('<operator> <expr>+')'; \
+              lispy : /^/ <operator> <expr>+ /$/ ;        \
               ",
               Number, Operator, Expression, Lispy);
     
     puts("Lispy Interprter v 0.01. ");
     puts("Press C-c to exit\n");
-
+    
     while (1) {
         // parse the input
         char* input = readline("lispy>");
@@ -68,7 +105,8 @@ int main(int argc, const char * argv[])
         mpc_result_t r;
         if (mpc_parse("<stdin>", input, Lispy, &r)) {
             
-            mpc_ast_print(r.output);
+            long result = eval(r.output);
+            printf("%li\n", result);
             mpc_ast_delete(r.output);
         } else {
             
