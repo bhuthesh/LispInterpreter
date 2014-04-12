@@ -70,7 +70,10 @@ long eval(mpc_ast_t* t) {
     int i = 3;
     while (strstr(t->children[i]->tag,"expr")) {
         x = eval_op(x, op, eval(t->children[i]));
-        i++;
+        if (i < t->children_num) {
+            i++;
+        }
+        else break;
     }
     return x;
 }
@@ -87,10 +90,10 @@ int main(int argc, const char * argv[])
     
     mpca_lang(MPC_LANG_DEFAULT,
               "                                             \
-              number : /-?[0-9]+/ ;                       \
-              operator : '+' | '-' | '*' | '/' ;          \
-              expr : <number> | '('<operator> <expr>+')'; \
-              lispy : /^/ <operator> <expr>+ /$/ ;        \
+              number : /-?[0-9]+/ ;                         \
+              operator : '+' | '-' | '*' | '/' ;            \
+              expr : <number> | '('<operator> <expr>+')';   \
+              lispy : /^/ <operator> <expr>+ /$/ ;  \
               ",
               Number, Operator, Expression, Lispy);
     
