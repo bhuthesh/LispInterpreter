@@ -20,7 +20,7 @@
 static char buffer[INPUT_BUFFER_SIZE];
 
 // realine function for windows
-char* reeadline(char* prompt) {
+char* readline(char* prompt) {
     fputs("lispy>", stdout);
     fgets(buffer, INPUT_BUFFER_SIZE, stdin);
     char* cpy = malloc(strlen(buffer) + 1);
@@ -45,7 +45,7 @@ typedef struct {
     int err;
 }lval;
 
-enum {LVAL_NUM, LVAL_ERR};
+enum {LVAL_NUM, LVAL_ERR, LVAL_SYM, LVAL_SEXPR};
 
 enum {LERR_DIV_BY_ZERO, LERR_BAD_OP, LERR_BAD_NUM};
 

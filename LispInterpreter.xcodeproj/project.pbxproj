@@ -28,6 +28,7 @@
 /* Begin PBXFileReference section */
 		2302CF9618F07B4500D79A4C /* LispInterpreter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LispInterpreter; sourceTree = BUILT_PRODUCTS_DIR; };
 		2302CF9B18F07B4500D79A4C /* LispInterpreter.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = LispInterpreter.1; sourceTree = "<group>"; };
+		230CF35F18FB25D600C9B770 /* grammar.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = grammar.txt; sourceTree = "<group>"; };
 		237ABC0018F3E5870095A995 /* parsing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = parsing.c; sourceTree = "<group>"; };
 		237ABC0218F3E5E10095A995 /* mpc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mpc.c; sourceTree = "<group>"; };
 		237ABC0318F3E5E10095A995 /* mpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mpc.h; sourceTree = "<group>"; };
@@ -66,6 +67,7 @@
 				237ABC0218F3E5E10095A995 /* mpc.c */,
 				237ABC0318F3E5E10095A995 /* mpc.h */,
 				237ABC0018F3E5870095A995 /* parsing.c */,
+				230CF35F18FB25D600C9B770 /* grammar.txt */,
 				2302CF9B18F07B4500D79A4C /* LispInterpreter.1 */,
 			);
 			path = LispInterpreter;
