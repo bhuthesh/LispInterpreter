@@ -111,9 +111,11 @@ void lval_del(lval* v) {
 }
 
 lval* lval_add(lval* v, lval* x) {
+    if (v != NULL) {
     v->count++;
     v->cell = realloc(v->cell, sizeof(lval *) * v->count);
     v->cell[v->count - 1] = x;
+    }
     return v;
 }
 
